@@ -3,6 +3,8 @@
     session_start();
     include('config.php'); 
 
+
+
     $loginFailed = false;
 
     if(isset($_POST['mail']) && isset($_POST['password'])) {
@@ -10,11 +12,17 @@
         $password = $_POST['password'];
         
         $login = $db->query("SELECT * FROM USERS where mail='$email' and password='$password'");
+        $is_admin = $db->query("SELECT * FROM USERS, ADMINS WHERE mail='$email' AND password='$password' AND users.ku_id = admins.ku_id ");
 
-        if($login->num_rows > 0) {
+        if ($is_admin->num_rows>0){
+            $_SESSION['ku_id'] = $login->fetch_assoc()['ku_id'];
+            header('Location: adminpage.php'); 
+        }
+        else if($login->num_rows > 0) {
             $_SESSION['ku_id'] = $login->fetch_assoc()['ku_id'];
             header('Location: homepage.php');
-        } else {
+        }
+        else {
             $loginFailed = true;
         }
     }
