@@ -1,6 +1,6 @@
 <?php
   include "config.php";
-  include "main.php"  
+  include "header.php"  
 ?>
 
 <form action="process_findclass.php" method="post">

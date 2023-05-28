@@ -1,6 +1,6 @@
 <?php
-include "main.php";
-include "findclass.php";
+include "header.php";
+include "classSearch.php";
 
 // Retrieve the room ID from the query parameter
 if (isset($_GET['roomID'])) {

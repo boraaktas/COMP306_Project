@@ -31,7 +31,7 @@
             
                 <form id ="form" method="POST" >
                     <button class="button" onclick="redirectToPage('homepage')"> Home </button>
-                    <button class="button" onclick="redirectToPage('findclass')">Class Search </button>
+                    <button class="button" onclick="redirectToPage('classSearch')">Class Search </button>
                     <button class="button" onclick="redirectToPage('book-join')">Reserve Class </button>
                     <button class="button" onclick="redirectToPage('logout')"> Logout </button>
                 </form>  

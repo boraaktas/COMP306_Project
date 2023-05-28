@@ -1,5 +1,5 @@
 <?php
-include "main.php";
+include "header.php";
 
 ?>
 </head>
@@ -61,7 +61,7 @@ if (!empty($_POST['room_id']) && !empty($_POST['myear'])) {
   $sql = "INSERT INTO booking (room_id, myear) VALUES ('$room_id', '$myear')";
   if ($db->query($sql) === TRUE) {
     echo "New record created successfully";
-    header("Location: main.php");
+    header("Location: homepage.php");
   } else {
     echo "Error: " . $sql . "<br>" . $db->error;
   }
