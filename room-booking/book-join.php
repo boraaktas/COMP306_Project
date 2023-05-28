@@ -7,8 +7,29 @@ include "main.php";
   <div class="container">
     <div class="form">
       <form action="reservation.php" method="POST">
-        <label for="r_id">Room ID:</label><br>
-        <input type="text" id="r_id" name="room_id" size="50"><br><br>
+      <select name="building" class="study-room-selector">
+        <option value="all">Building</option>
+        <option value="CASE">CASE</option>
+        <option value="SNA">SNA</option>
+        <option value="SNA">SNA</option>
+        <option value="SOS">SOS</option>
+        <option value="SCI">SCI</option>
+      </select>
+
+      <select name="floor" class="study-room-selector">
+        <option value="all">Floor</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="Z">Z</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+      </select>
+
+      <br>
+
+      <label for="class_no">ClassNo:</label>
+      
+      <input type="text" id="class_no" name="class_no" size="50"><br><br>
 
         <select class="nav_select" name="hour">
           <option value="" disabled selected>Select Time</option>
@@ -19,6 +40,12 @@ include "main.php";
           }
           ?>
         </select><br><br>
+
+        <select name="study_type" class="study-room-selector">
+          <option value="all">Study Type</option>
+          <option value="Individual">Individual</option>
+          <option value="Group">Group</option>
+        </select>
 
         <input type="submit" value="Submit">
       </form>
