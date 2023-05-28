@@ -3,6 +3,8 @@
     session_start();
     include('config.php'); 
 
+
+
     $loginFailed = false;
 
     if(isset($_POST['mail']) && isset($_POST['password'])) {
