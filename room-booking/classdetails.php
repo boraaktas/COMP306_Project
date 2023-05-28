@@ -1,6 +1,6 @@
 <?php
 include "main.php";
-include "groupstudy.php";
+include "findclass.php";
 
 // Retrieve the room ID from the query parameter
 if (isset($_GET['roomID'])) {
