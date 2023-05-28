@@ -32,6 +32,7 @@
                 <form id ="form" method="POST" >
                     <button class="button" onclick="redirectToPage('homepage')"> Home </button>
                     <button class="button" onclick="redirectToPage('findclass')">Class Search </button>
+                    <button class="button" onclick="redirectToPage('reservation')">Reserve Class </button>
                     <button class="button" onclick="redirectToPage('logout')"> Logout </button>
                 </form>  
 
