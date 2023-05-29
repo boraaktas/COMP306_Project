@@ -43,101 +43,6 @@
 
 
 <style>
-
-    .button-container {
-    text-align: center;
-    }
-
-    .study-room-selector {
-    padding: 10px;
-    font-size: 18px;
-    border: none;
-    background-color: #f1f1f1;
-    color: #555;
-    border-radius: 10px;
-    width: 250px;
-    margin-bottom: 10px;
-    }
-
-    .search-button {
-    padding: 12px 24px;
-    font-size: 20px;
-    border: none;
-    background-color: #4CAF50;
-    color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-    }
-
-    .search-button:hover {
-    background-color: #45a049;
-    }
-    
-    .login-form {
-    max-width: 400px;
-    margin: 0 auto;
-    background-color: #ffffff;
-    border-radius: 8px;
-    padding: 40px;
-    margin-top: 100px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .login-form p {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    text-align: center;
-    }
-
-    .login-form .error {
-    color: #ff0000;
-    font-size: 14px;
-    text-align: center;
-    margin-bottom: 10px;
-    }
-
-
-
-    .login-form input[type="text"],
-    .login-form input[type="password"] {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    }
-
-    .login-form button[type="submit"] {
-    background-color: #4CAF50;
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    padding: 12px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    width: 100%;
-    }
-
-    .login-form button[type="submit"]:hover {
-    background-color: #45a049;
-    }
-
-    .login-form h1 {
-    font-size: 16px;
-    text-align: center;
-    margin-top: 20px;
-    }
-
-    .login-form h1 a {
-    color: #4CAF50;
-    text-decoration: none;
-    font-weight: bold;
-    }
-
-
-
     body {
     display: flex;
     flex-direction: column;
@@ -168,7 +73,7 @@
     align-items: center;
     background: inherit;
     }
-
+  
     .button {
     border: 1px solid #3498db;
     background: inherit; 

@@ -2,24 +2,26 @@
 include "config.php";
 include "header.php";
 ?>
+<!DOCTYPE html>
+<head>
+
+</head>
+<body>
+    <section class="sec">
+        <div class="content">
+            <div class="textBox">
+                <h2>
+                    Need a place to <br><span> study? </span></h2>
+                </h2>
+        </div>
+        </div>
+
+
+    </section>
+
+</body>
 
 <style>
-header ul{
-    position:relative;
-    display:flex;
-}
-header ul li 
-{
-    list-style: none;
-}
-header ul li a {
-    display: inline-block;
-    color: #fff;
-    font-weight:  400;
-    margin-left: 40px;
-    text-decoration: none;
-}
-
 .content{
     position: relative;
     width: 100%;
@@ -57,23 +59,3 @@ header ul li a {
     text-transform: uppercase;
 }
 </style>
-
-<!DOCTYPE html>
-<head>
-
-</head>
-<body>
-    <section class="sec">
-        <div class="content">
-            <div class="textBox">
-                <h2>
-                    Need a place to <br><span> study? </span></h2>
-                </h2>
-        </div>
-        </div>
-
-
-    </section>
-
-</body>
-

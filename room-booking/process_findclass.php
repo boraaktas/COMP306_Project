@@ -1,6 +1,7 @@
 <?php
 include "config.php";
-include "header.php";
+
+include "classSearch.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -17,23 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $selectedLecCap= $_POST["has_lectureCap"];
     $selectedTouchScreen= $_POST["has_touchScreen"];
     $selectedConnectionType = $_POST["connection_type"];
-
-
-    echo "Selected option 1: " . $selectedBuilding . "<br>";
-    echo "Selected option 2: " . $selectedFloor . "<br>";
-    echo "Selected option 3: " . $selectedClassNo . "<br>";
-    echo "Selected option 4: " . $selectedCapacity . "<br>";
-    echo "Selected option 5: " . $selectedNoBoard . "<br>";
-    echo "Selected option 6: " . $selectedIndv . "<br>";
-    echo "Selected option 7: " . $selectedWindow . "<br>";
-    echo "Selected option 8: " . $selectedCam . "<br>";
-    echo "Selected option 9: " . $selectedDocCam . "<br>";
-    echo "Selected option 10: " . $selectedOutlets . "<br>";
-    echo "Selected option 11: " . $selectedLecCap . "<br>";
-    echo "Selected option 12: " . $selectedTouchScreen . "<br>";
-    echo "Selected option 13: " . $selectedConnectionType . "<br>";
-
-
 }
 
 

@@ -25,9 +25,9 @@
       <option value="2">2</option>
     </select>
     
-    <input type="text" id="class_no" name="class_no" size="50", placeholder="Class No" class="study-room-selector">
+    <input type="text" id="class_no" name="class_no" , placeholder="Class No" class="study-room-selector">
 
-    <br>
+
 
     <select name="capacity" class="study-room-selector">
       <option value="all">Capacity</option>
@@ -62,7 +62,6 @@
       <option value=0>No</option>
     </select>
 
-    <br>
 
     <select name="has_DocCam" class="study-room-selector">
       <option value="all">DocCamera</option>
@@ -98,46 +97,78 @@
 
     <input type="submit" value="Search" class="search-button">
 
-  </div>
-</form>
+    </div>
+  </form>
+  <style>
+  .study-room-selector {
+  padding: 10px;
+  font-size: 15px;
+  border: none;
+  background-color: #f1f1f1;
+  color: #555;
+  border-radius: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
 
+  
 
-<style>
-  .filter-container {
-    text-align: center;
-    margin: 0 auto;
-  }
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 10px;
+}
 
-  .study-room-selector{
-    padding: 10px;
-    font-size: 15px;
-    border: none;
-    background-color: #f1f1f1;
-    color: #555;
-    border-radius: 10px;
-    width: 150px;
-    margin-bottom: 10px;
-    color: black;
-  }
+.input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
 
-  ::placeholder {
-    color: black;
-    font-size: 15px;
-  }
+.input-group label {
+  font-size: 15px;
+  color: #555;
+  margin-right: 10px;
+}
 
-  .search-button {
-    padding: 12px 24px;
-    font-size: 20px;
-    border: none;
-    background-color: #4CAF50;
-    color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+.custom-select {
+  position: relative;
+  width: 200px;
+}
 
-  .search-button:hover {
-    background-color: #45a049;
-  }
+.custom-select select {
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  border: none;
+  background-color: #f1f1f1;
+  color: #555;
+  border-radius: 10px;
+  appearance: none;
+}
 
+.custom-input input {
+  padding: 10px;
+  font-size: 15px;
+  border: none;
+  background-color: #f1f1f1;
+  color: #555;
+  border-radius: 10px;
+}
 
+.search-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  background-color: #4CAF50;
+  color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.search-button:hover {
+  background-color: #45a049;
+}
 </style>
