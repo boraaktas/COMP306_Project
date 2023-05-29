@@ -74,7 +74,10 @@
                             echo "<td>$hours[$i]:00 - $hours[$i]:59</td>";
                             echo "<td>Cap array</td>";
                             echo "<td>Allowed Ind Study array</td>";
-                        echo "<td><a href='reservation_add.php?building=$building&floor=$floor&class_no=$class_no&date=$date&hour=$$hours[$i]' class='button' onclick='reserveOrJoin($hours[$i])'>ResJoin</a></td>";
+                        echo "<td><a href='reserve_individual.php?building=$building&floor=$floor&class_no=$class_no&date=$date&hour=$$hours[$i]' class='button' onclick='Reserve Individual($hours[$i])'>Reserve (Individual)</a>
+                        <a href='reserve_group.php?building=$building&floor=$floor&class_no=$class_no&date=$date&hour=$$hours[$i]' class='button' onclick='Reserve Group($hours[$i])'>Reserve (Group)</a>
+                        <a href='join.php?building=$building&floor=$floor&class_no=$class_no&date=$date&hour=$$hours[$i]' class='button' onclick='Join($hours[$i])'>Join</a>
+                        </td>";
                         echo "</tr>";
                     }
                 ?>

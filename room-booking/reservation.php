@@ -12,22 +12,34 @@
             $floor = $_POST["floor"];
             $class_no = $_POST["class_no"];
             $date = $_POST["date"];
-  
-            // check if there is an class for the selected building, floor, class_no in the database
-            $sql = "SELECT * FROM classes WHERE building = '$building' AND floor = '$floor' AND class_no = '$class_no'";
-            $result = $db->query($sql);
+            $ku_id = $_SESSION['ku_id'];
 
-            if ($result->num_rows == 0) {
+            // check if there is an class for the selected building, floor, class_no in the database
+            $check_class_query = "SELECT * FROM classes WHERE building = '$building' AND floor = '$floor' AND class_no = '$class_no'";
+            $check_class_result = $db->query($check_class_query);
+
+            if ($check_class_result->num_rows > 0) {
+                
+                //check if user is in regular_user
+                $check_regular_user_query = "SELECT * FROM regular_users WHERE ku_id = '$ku_id'";
+                $check_regular_user_result = $db->query($check_regular_user_query);
+
+                if ($check_regular_user_result->num_rows > 0) {
+
+                    header("Location: reservation_add.php?building=$building&floor=$floor&class_no=$class_no&date=$date");
+
+                } else {
+                    echo '<script> alert("There is no regular user with this ku id"); </script>;';
+                }
+                
+            } else {
                 echo '<script> alert("There is no class with this number in this building and floor"); </script>;';
-            }
-            else {
-                header("Location: reservation_add.php?building=$building&floor=$floor&class_no=$class_no&date=$date");
             }
         
         }
     }
 
-    if($_SERVER["REQUEST_METHOD"] === "POST"){
+    /*if($_SERVER["REQUEST_METHOD"] === "POST"){
 
         $ku_id = $_SESSION['ku_id'];
         
@@ -40,7 +52,7 @@
             echo "reservation added";
         }
 
-    }
+    }*/
 
 ?>
 
