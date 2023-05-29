@@ -1,15 +1,16 @@
 <?php
 
-include "config.php";
-include "header.php";
+   include "config.php";
+   include "header.php";
 
 
-session_start();
+   session_start();
 
-if(!isset($_SESSION['ku_id'])){
-    header('location:login_form.php');
- }
- ?>
+   if(!isset($_SESSION['ku_id'])){
+      header('location:login_form.php');
+   }
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">

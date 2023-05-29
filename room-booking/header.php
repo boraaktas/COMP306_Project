@@ -32,8 +32,14 @@
                 <form id ="form" method="POST" >
                     <button class="button" onclick="redirectToPage('homepage')"> Home </button>
                     <button class="button" onclick="redirectToPage('classSearch')">Class Search </button>
-                    <button class="button" onclick="redirectToPage('book-join')">Reserve Class </button>
-                    <button class="button" onclick="redirectToPage('logout')"> Logout </button>
+                    <button class="button" onclick="redirectToPage('reservation')">Reserve Class </button>
+                    <select name="profile_selector" required>
+
+                        <option class="button" value="profile">Profile</option>
+                        <option class="button" value="profile" onkeypress="redirectToPage('profile_settings')">Settings</option>
+                        <option class="button" value="favorites" onkeypress="redirectToPage('fav_classes')">Favorites</option>
+                        <option class="button" value="logout" onblur="redirectToPage('logout')">Logout</option>
+                    </select>
                 </form>  
 
             </header>
@@ -75,14 +81,14 @@
     }
   
     .button {
-    border: 1px solid #3498db;
-    background: inherit; 
+    background: #45a049; 
     color: #ffffff; 
     padding: 10px 20px;
     font-size: 20px;
     font-family: 'Poppins', sans-serif;
     cursor: pointer;
     margin: 10px;
+    border-radius: 5px;
     }
 
 </style>
