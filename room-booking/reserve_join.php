@@ -19,7 +19,7 @@
         $formattedHour = sprintf("%02d:00", $hour);
 
         $ku_id = $_SESSION['ku_id'];
-        $studyType = 'Group';
+        $studyType = 'Join';
         $res_time = $date ." ". $formattedHour;
         echo $res_time;
         
