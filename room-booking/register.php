@@ -103,7 +103,7 @@
                     <option value="" disabled selected>Select your gender</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
-                    <option value="LGBT+">LGBT+</option>
+                    <option value="Non-binary">Non-binary</option>
                 </select>
 
                 <button type="submit">Sign Up</button>

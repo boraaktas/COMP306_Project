@@ -32,7 +32,7 @@
         $ku_id = $_SESSION['ku_id'];
         
         // Build the SQL query
-        $sql = "INSERT INTO reservations (ku_id, building, floor, class_no, res_time, res_status, study_type)  values ('$ku_id', '$building' , '$floor' , '$class_no', '$hour', 'RESERVED', '$studyType')";
+       $sql = "INSERT INTO reservations (ku_id, building, floor, class_no, res_time, res_status, study_type)  values ('$ku_id', '$building' , '$floor' , '$class_no', '$hour', 'RESERVED', '$studyType')";
 
         $result = mysqli_query($db, $sql);
         
