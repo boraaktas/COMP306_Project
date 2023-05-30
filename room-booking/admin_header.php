@@ -31,14 +31,8 @@
             
                 <form id ="form" method="POST" >
                     <button class="button" onclick="redirectToPage('reservations_admin')"> View Reservations </button>
-                    <button class="button" onclick="redirectToPage('data_analysis')">Data Analysis </button>
-                    <select name="profile_selector" required>
-
-                        <option class="button" value="profile">Profile</option>
-                        <option class="button" value="profile" onkeypress="redirectToPage('profile_settings')">Settings</option>
-                        <option class="button" value="favorites" onkeypress="redirectToPage('fav_classes')">Favorites</option>
-                        <option class="button" value="logout" onblur="redirectToPage('logout')">Logout</option>
-                    </select>
+                    <button class="button" onclick="redirectToPage('admin_data')">Data Analysis </button>
+                    <button class="button" onclick="redirectToPage('logout')">Logout </button>
                 </form>  
 
             </header>

@@ -1,9 +1,10 @@
 <?php
   include "config.php";
   include "header.php"  
+  
 ?>
 
-<form action="process_findclass.php" method="post">
+<form action="classSearch-query.php" method="post">
   <br>
   <div class="filter-container">
 
@@ -25,9 +26,7 @@
       <option value="2">2</option>
     </select>
     
-    <input type="text" id="class_no" name="class_no" size="50", placeholder="Class No" class="study-room-selector">
-
-    <br>
+    <input type="text" id="class_no" name="class_no" , placeholder="Class No" class="study-room-selector">
 
     <select name="capacity" class="study-room-selector">
       <option value="all">Capacity</option>
@@ -62,7 +61,6 @@
       <option value=0>No</option>
     </select>
 
-    <br>
 
     <select name="has_DocCam" class="study-room-selector">
       <option value="all">DocCamera</option>
@@ -97,15 +95,20 @@
     <br>
 
     <input type="submit" value="Search" class="search-button">
-
-  </div>
+    </div>
 </form>
+  
 
 
-<style>
+  <style>
   .filter-container {
     text-align: center;
     margin: 0 auto;
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: grey;
+    box-sizing: border-box;
   }
 
   .study-room-selector{
@@ -115,7 +118,7 @@
     background-color: #f1f1f1;
     color: #555;
     border-radius: 10px;
-    width: 150px;
+    width: 180px;
     margin-bottom: 10px;
     color: black;
   }
@@ -126,12 +129,12 @@
   }
 
   .search-button {
-    padding: 12px 24px;
+    padding: 12px 12px;
     font-size: 20px;
     border: none;
     background-color: #4CAF50;
     color: #fff;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
   }
 
@@ -139,5 +142,5 @@
     background-color: #45a049;
   }
 
-
 </style>
+
