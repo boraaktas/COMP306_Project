@@ -31,7 +31,7 @@
             
                 <form id ="form" method="POST" >
                     <button class="button" onclick="redirectToPage('reservations_admin')"> View Reservations </button>
-                    <button class="button" onclick="redirectToPage('admin_data')">Data Analysis </button>
+                    <button class="button" onclick="redirectToPage('admin_range')">Data Analysis </button>
                     <button class="button" onclick="redirectToPage('logout')">Logout </button>
                 </form>  
 
