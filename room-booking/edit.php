@@ -1,4 +1,8 @@
 <?php
+  if(!isset($_SESSION)) 
+  { 
+      session_start(); 
+  } 
 include "header.php";
 include "config.php"
 ?>
@@ -39,11 +43,9 @@ include "config.php"
                 }
             }
         }
-    
-             
+       
         $sql = "SELECT * FROM regular_users WHERE ku_id = '$current_id'";
         $gotResuslts = mysqli_query($db,$sql);
-        
 
         if($gotResuslts){
             if(mysqli_num_rows($gotResuslts)>0 ){
@@ -57,7 +59,7 @@ include "config.php"
     <form action="edit.php" method="POST">
             <div class="form-group">
                 <label for = "academic_level">Academic Level:</label>
-                <select name="academic_level" class="form-control" value ="<?php echo $row2['academic_level']; ?>" >
+                <select name="academic_level" class="form-control" value ="<?php echo $row['academic_level']; ?>" >
                     <option value="" disabled selected>Select your academic level</option>
                     <option value="Freshman">Freshman</option>
                     <option value="Sophomore">Sophomore</option>
@@ -69,7 +71,7 @@ include "config.php"
             </div>
             <div class="form-group">
                 <label for = "faculty">Faculty:</label>
-                <select name="faculty" class="form-control" value = "<?php echo $row2['faculty']; ?>" >
+                <select name="faculty" class="form-control" value = "<?php echo $row['faculty']; ?>" >
                     <option value="" disabled selected>Select your faculty</option>
                     <option value="CASE">CASE</option>
                     <option value="CS">CS</option>

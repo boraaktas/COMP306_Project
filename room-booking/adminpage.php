@@ -3,8 +3,10 @@
    include "config.php";
    include "header.php";
 
-
-   session_start();
+   if(!isset($_SESSION)) 
+   { 
+       session_start(); 
+   } 
 
    if(!isset($_SESSION['ku_id'])){
       header('location:login_form.php');

@@ -1,5 +1,8 @@
 <?php
-    session_start();
+      if(!isset($_SESSION)) 
+      { 
+          session_start(); 
+      } 
     include "config.php";
 
     if (!isset($_SESSION['ku_id'])) {
