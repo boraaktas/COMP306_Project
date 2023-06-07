@@ -24,7 +24,7 @@
         echo $res_time;
         
         // Build the SQL query
-        $sql = "INSERT INTO reservations (ku_id, building, floor, class_no, res_time, res_status, study_type)  values ('$ku_id', '$building' , '$floor' , '$class_no', '$res_time', 'RESERVED', '$studyType')";
+        $sql = "INSERT INTO joins (ku_id, building, floor, class_no, join_time, join_status)  values ('$ku_id', '$building' , '$floor' , '$class_no', '$res_time', 'JOINED')";
 
         echo $sql;
         $result = mysqli_query($db, $sql);
