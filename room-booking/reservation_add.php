@@ -236,9 +236,9 @@
                             
                             // Condition 3 for disabling Join button
                             if ( !$indv_reserved && !$group_reserved) {
-                                echo "<button href='join.php?building=$building&floor=$floor&class_no=$class_no&date=$date&hour=$hours[$i]' class='button' disabled onclick='Join($hours[$i])'>Join</button>";
+                                echo "<button href='reserve_join.php?building=$building&floor=$floor&class_no=$class_no&date=$date&hour=$hours[$i]' class='button' disabled onclick='Join($hours[$i])'>Join</button>";
                             } else {
-                                echo "<a href='join.php?building=$building&floor=$floor&class_no=$class_no&date=$date&hour=$hours[$i]' class='button' onclick='Join($hours[$i])'>Join</a>";
+                                echo "<a href='reserve_join.php?building=$building&floor=$floor&class_no=$class_no&date=$date&hour=$hours[$i]' class='button' onclick='Join($hours[$i])'>Join</a>";
                             }
                             
                             echo "</td>";
