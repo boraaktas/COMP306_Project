@@ -72,10 +72,12 @@
         today = yyyy + '-' + mm + '-' + dd;
 
         // if the input date is before the current date, then show an alert and clear the input
+        /* bunu açmayı unutma ha !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
         if (date < today) {
             alert("Please enter a valid date");
             document.getElementById("date").value = "";
         }
+        */
     }
 
 </script>
@@ -88,17 +90,20 @@
     <select name="building" class="study-room-selector" required>
       <option value="CASE">CASE</option>
       <option value="SNA">SNA</option>
-      <option value="SNA">SNA</option>
+      <option value="ENG">ENG</option>
       <option value="SOS">SOS</option>
       <option value="SCI">SCI</option>
+      <option value="ELC">ELC</option>
     </select>
 
     <select name="floor" class="study-room-selector" required>
-      <option value="A">A</option>
-      <option value="B">B</option>
-      <option value="Z">Z</option>
       <option value="1">1</option>
       <option value="2">2</option>
+      <option value="A">A</option>
+      <option value="Z">Z</option>
+      <option value="B">B</option>
+      <option value="B1">B1</option>
+      <option value="B2">B2</option>
     </select>
     
     <input type="text" id="class_no" name="class_no" size="50", placeholder="Class No" class="study-room-selector" required>
