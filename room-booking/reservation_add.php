@@ -49,7 +49,10 @@
         $condition_join = false;
 
         //get allow_individual of selected class to make reserve indv button disabled
-        $check_allow_individual_query = "SELECT allow_individual FROM classes WHERE building = '$building' AND floor = '$floor' AND class_no = '$class_no'";
+        $check_allow_individual_query = "SELECT allow_individual
+                                         FROM classes
+                                         WHERE building = '$building' AND floor = '$floor' AND class_no = '$class_no'";
+
         $check_allow_individual_result = $db->query($check_allow_individual_query);
 
         $row_tmp = mysqli_fetch_assoc($check_allow_individual_result);
@@ -63,18 +66,20 @@
         }
 
         //retrieves dates of individual reserved selected class
-        $check_indv_reserved_query = "SELECT DATE_FORMAT(res_time, '%H') AS hour 
-        FROM classes INNER JOIN reservations 
-        WHERE YEAR(res_time) = '$year' AND MONTH(res_time) = '$month' AND DAY(res_time) = '$day' AND res_status = 'RESERVED' AND classes.building = '$building' AND classes.floor = '$floor' AND classes.class_no = '$class_no' AND classes.building=reservations.building AND classes.floor=reservations.floor AND classes.class_no=reservations.class_no AND study_type = 'Individual'
-         OR res_time IN (
-            SELECT res_time
-            FROM RESERVATIONS
-            WHERE ku_id = '$ku_id'
-            UNION
-            SELECT join_time
-            FROM JOINS
-            WHERE ku_id = '$ku_id'
-        )";
+        $check_indv_reserved_query = "SELECT DATE_FORMAT(res_time, '%Y-%m-%d-%H') AS date
+                                        FROM classes INNER JOIN reservations 
+                                        WHERE YEAR(res_time) = '$year' AND MONTH(res_time) = '$month' AND DAY(res_time) = '$day' AND res_status = 'RESERVED'
+                                                AND classes.building = '$building' AND classes.floor = '$floor' AND classes.class_no = '$class_no'
+                                                AND classes.building=reservations.building AND classes.floor=reservations.floor AND classes.class_no=reservations.class_no
+                                                AND study_type = 'Individual'
+                                        OR res_time IN (
+                                                        SELECT res_time
+                                                        FROM RESERVATIONS
+                                                        WHERE ku_id = '$ku_id'
+                                                        UNION
+                                                        SELECT join_time
+                                                        FROM JOINS
+                                                        WHERE ku_id = '$ku_id')";
         
         $check_indv_reserved_dates = $db->query($check_indv_reserved_query);
 
@@ -84,12 +89,24 @@
             
             // Fetch rows from the result object
             while ($row = mysqli_fetch_assoc($check_indv_reserved_dates)) {
-                // Access the hour value from the row
-                $hour_tmp = $row['hour'];
+
+                $year_tmp = explode("-", $row['date'])[0];
+                $month_tmp = explode("-", $row['date'])[1];
+                $day_tmp = explode("-", $row['date'])[2];
+
+                // Access the hour value from the row that is in the format of "Y-m-d-H"
+                $hour_tmp = explode("-", $row['date'])[3];
                 
-                // Add the hour to the array
-                $reserved_indv_hours[] = $hour_tmp;
+
+                if ($year_tmp == $year && $month_tmp == $month && $day_tmp == $day) {
+                    // Add the hour to the array
+                    $reserved_indv_hours[] = $hour_tmp;
+                }
+            
+                
             }
+
+            #print_r($reserved_indv_hours);
             
             // Free the result set
             mysqli_free_result($check_indv_reserved_dates);
@@ -102,18 +119,20 @@
 
          
         //retrieves dates(hours) of group reserved selected class that user doesn't have an appointment on
-         $check_group_reserved_query = "SELECT DATE_FORMAT(res_time, '%H') AS hour 
-         FROM classes INNER JOIN reservations 
-         WHERE YEAR(res_time) = '$year' AND MONTH(res_time) = '$month' AND DAY(res_time) = '$day' AND res_status = 'RESERVED' AND classes.building = '$building' AND classes.floor = '$floor' AND classes.class_no = '$class_no' AND classes.building=reservations.building AND classes.floor=reservations.floor AND classes.class_no=reservations.class_no AND study_type = 'Group'
-            OR res_time IN (
-                SELECT res_time
-                FROM RESERVATIONS
-                WHERE ku_id = '$ku_id'
-                UNION
-                SELECT join_time
-                FROM JOINS
-                WHERE ku_id = '$ku_id'
-        )";
+         $check_group_reserved_query = "SELECT DATE_FORMAT(res_time, '%Y-%m-%d-%H') AS date 
+                                        FROM classes INNER JOIN reservations 
+                                        WHERE YEAR(res_time) = '$year' AND MONTH(res_time) = '$month' AND DAY(res_time) = '$day'
+                                                AND res_status = 'RESERVED' AND classes.building = '$building' AND classes.floor = '$floor'
+                                                 AND classes.class_no = '$class_no' AND classes.building=reservations.building
+                                                  AND classes.floor=reservations.floor AND classes.class_no=reservations.class_no AND study_type = 'Group'
+                                                    OR res_time IN (
+                                                        SELECT res_time
+                                                        FROM RESERVATIONS
+                                                        WHERE ku_id = '$ku_id'
+                                                        UNION
+                                                        SELECT join_time
+                                                        FROM JOINS
+                                                        WHERE ku_id = '$ku_id')";
 
          $check_group_reserved_dates = $db->query($check_group_reserved_query);
  
@@ -123,11 +142,19 @@
              
              // Fetch rows from the result object
              while ($row = mysqli_fetch_assoc($check_group_reserved_dates)) {
-                 // Access the hour value from the row
-                 $hour_tmp = $row['hour'];
-                 
-                 // Add the hour to the array
-                 $reserved_group_hours[] = $hour_tmp;
+                              
+                $year_tmp = explode("-", $row['date'])[0];
+                $month_tmp = explode("-", $row['date'])[1];
+                $day_tmp = explode("-", $row['date'])[2];
+
+                // Access the hour value from the row that is in the format of "Y-m-d-H"
+                $hour_tmp = explode("-", $row['date'])[3];
+                
+
+                if ($year_tmp == $year && $month_tmp == $month && $day_tmp == $day) {
+                    // Add the hour to the array
+                    $reserved_group_hours[] = $hour_tmp;
+                }
              }
              
              // Free the result set
@@ -137,14 +164,7 @@
              echo "Error: " . mysqli_error($db);
          }
  
-         print_r($reserved_group_hours);
-
-         
-
-
-
-
-
+         #print_r($reserved_group_hours);
 
     }
 
@@ -180,8 +200,6 @@
             </tr>
                 <?php
 
-
-                    
                     for ($i = 0; $i < count($hours); $i++) {
                         echo "<tr>";
                             echo "<td>$hours[$i]:00 - $hours[$i]:59</td>";
@@ -203,7 +221,7 @@
 
                             
                             // Condition 1 for disabling Reserve (Individual) button
-                            if (! ($allow_individual && !$indv_reserved) ) {
+                            if (! ($allow_individual && !$indv_reserved && !$group_reserved)) {
                                 echo "<button href='reserve_individual.php?building=$building&floor=$floor&class_no=$class_no&date=$date&hour=$hours[$i]' class='button' disabled onclick='ReserveIndividual($hours[$i])'>Reserve (Individual)</button>";
                             } else {
                                 echo "<a href='reserve_individual.php?building=$building&floor=$floor&class_no=$class_no&date=$date&hour=$hours[$i]' class='button' onclick='ReserveIndividual($hours[$i])'>Reserve (Individual)</a>";
@@ -217,7 +235,7 @@
                             }
                             
                             // Condition 3 for disabling Join button
-                            if ( $indv_reserved ) {
+                            if ( !$indv_reserved && !$group_reserved) {
                                 echo "<button href='reserve_join.php?building=$building&floor=$floor&class_no=$class_no&date=$date&hour=$hours[$i]' class='button' disabled onclick='Join($hours[$i])'>Join</button>";
                             } else {
                                 echo "<a href='reserve_join.php?building=$building&floor=$floor&class_no=$class_no&date=$date&hour=$hours[$i]' class='button' onclick='Join($hours[$i])'>Join</a>";
@@ -235,6 +253,12 @@
 
 
 <style>
+
+    .button:disabled {
+        background-color: gray;
+        color: black;
+        border: 2px solid #d9d9d9;
+    }
 
     .hours-container {
         display: flex;
