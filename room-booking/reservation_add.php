@@ -56,7 +56,7 @@
         
         $allow_individual_bool = $row_tmp["allow_individual"];
 
-        print_r($allow_individual_bool);
+        #print_r($allow_individual_bool);
 
         if ( $allow_individual_bool== '1') {
             $allow_individual = true;
@@ -98,7 +98,7 @@
             echo "Error: " . mysqli_error($db);
         }
 
-        print_r($reserved_indv_hours);
+        #print_r($reserved_indv_hours);
 
          
         //retrieves dates(hours) of group reserved selected class that user doesn't have an appointment on
