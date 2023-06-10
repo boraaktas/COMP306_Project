@@ -15,9 +15,13 @@
         $class_no = $_GET["class_no"];
         $date = $_GET["date"];
 
+        $ku_id = $_SESSION['ku_id'];
+
         $year = date("Y", strtotime($date));
         $month = date("m", strtotime($date));
         $day = date("d", strtotime($date));
+
+
         
         // create an array of hours after the current hour if the date is today or all hours if the date is future date 
         $hours = array();
@@ -59,7 +63,19 @@
         }
 
         //retrieves dates of individual reserved selected class
-        $check_indv_reserved_query = "SELECT DATE_FORMAT(res_time, '%H') AS hour FROM classes INNER JOIN reservations WHERE YEAR(res_time) = '$year' AND MONTH(res_time) = '$month' AND DAY(res_time) = '$day' AND res_status = 'RESERVED' AND classes.building = '$building' AND classes.floor = '$floor' AND classes.class_no = '$class_no' AND classes.building=reservations.building AND classes.floor=reservations.floor AND classes.class_no=reservations.class_no AND study_type = 'Individual'";
+        $check_indv_reserved_query = "SELECT DATE_FORMAT(res_time, '%H') AS hour 
+        FROM classes INNER JOIN reservations 
+        WHERE YEAR(res_time) = '$year' AND MONTH(res_time) = '$month' AND DAY(res_time) = '$day' AND res_status = 'RESERVED' AND classes.building = '$building' AND classes.floor = '$floor' AND classes.class_no = '$class_no' AND classes.building=reservations.building AND classes.floor=reservations.floor AND classes.class_no=reservations.class_no AND study_type = 'Individual'
+         OR res_time IN (
+            SELECT res_time
+            FROM RESERVATIONS
+            WHERE ku_id = '$ku_id'
+            UNION
+            SELECT join_time
+            FROM JOINS
+            WHERE ku_id = '$ku_id'
+        )";
+        
         $check_indv_reserved_dates = $db->query($check_indv_reserved_query);
 
         if ($check_indv_reserved_dates) {
@@ -85,8 +101,20 @@
         print_r($reserved_indv_hours);
 
          
-        //retrieves dates of group reserved selected class
-         $check_group_reserved_query = "SELECT DATE_FORMAT(res_time, '%H') AS hour FROM classes INNER JOIN reservations WHERE YEAR(res_time) = '$year' AND MONTH(res_time) = '$month' AND DAY(res_time) = '$day' AND res_status = 'RESERVED' AND classes.building = '$building' AND classes.floor = '$floor' AND classes.class_no = '$class_no' AND classes.building=reservations.building AND classes.floor=reservations.floor AND classes.class_no=reservations.class_no AND study_type = 'Group'";
+        //retrieves dates(hours) of group reserved selected class that user doesn't have an appointment on
+         $check_group_reserved_query = "SELECT DATE_FORMAT(res_time, '%H') AS hour 
+         FROM classes INNER JOIN reservations 
+         WHERE YEAR(res_time) = '$year' AND MONTH(res_time) = '$month' AND DAY(res_time) = '$day' AND res_status = 'RESERVED' AND classes.building = '$building' AND classes.floor = '$floor' AND classes.class_no = '$class_no' AND classes.building=reservations.building AND classes.floor=reservations.floor AND classes.class_no=reservations.class_no AND study_type = 'Group'
+            OR res_time IN (
+                SELECT res_time
+                FROM RESERVATIONS
+                WHERE ku_id = '$ku_id'
+                UNION
+                SELECT join_time
+                FROM JOINS
+                WHERE ku_id = '$ku_id'
+        )";
+
          $check_group_reserved_dates = $db->query($check_group_reserved_query);
  
          if ($check_indv_reserved_dates) {
@@ -111,7 +139,9 @@
  
          print_r($reserved_group_hours);
 
-        
+         
+
+
 
 
 
