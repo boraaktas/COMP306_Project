@@ -95,6 +95,12 @@
       <option value="Vga">Vga</option>
     </select>
 
+    <select name="availability" class="study-room-selector">
+      <option value="all">Current Availability</option>
+      <option value="available">Available</option>
+      <option value="non_available">Not Available</option>
+    </select>
+
     <br>
 
     <input type="submit" value="Search" class="search-button">
