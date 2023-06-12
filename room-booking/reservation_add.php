@@ -166,6 +166,8 @@
  
          #print_r($reserved_group_hours);
 
+                                                         
+
     }
 
 ?>
@@ -218,6 +220,64 @@
                             } else {
                                 $group_reserved = false;
                             }
+                            
+                            if($i<10){
+                                $current_time = $date." 0".$hours[$i].":00:00";
+                            }else{
+                                $current_time = $date." ".$hours[$i].":00:00";
+                            }
+
+
+                            
+                            echo $current_time;
+                            echo $date;
+                            
+
+                            $check_if_user_has_reservation_query =      "SELECT CONVERT(res_time,CHAR) as res_time
+                                                                        FROM reservations
+                                                                        WHERE ku_id = '$ku_id'
+                                                                        UNION
+                                                                        SELECT join_time
+                                                                        FROM joins
+                                                                        WHERE ku_id = '$ku_id'";
+                            
+                            
+                             
+
+                            $check_if_user_has_reservation = $db->query($check_if_user_has_reservation_query);   
+
+                            $user_has_reservation_so_cant_join = false;
+
+                            
+                            
+
+                            if ($check_if_user_has_reservation) {
+                                // Create an array to store the hours
+                                $users_reserved_times = array();
+                                
+                                // Fetch rows from the result object
+                                while ($row = mysqli_fetch_assoc($check_if_user_has_reservation)) {
+                                    $time_tmp = $row['res_time'];
+
+                                    $users_reserved_times[] = $time_tmp;
+                                    
+                   
+                                }
+                                
+                                // Free the result set
+                                mysqli_free_result($check_if_user_has_reservation);
+                            } else {
+                                // Query execution failed
+                                echo "Error: " . mysqli_error($db);
+                            }
+
+                            if (in_array($current_time,$users_reserved_times))
+                            {
+                            echo "Match exists!";
+                            $user_has_reservation_so_cant_join = true;
+                            }
+                            
+                            
 
                             
                             // Condition 1 for disabling Reserve (Individual) button
@@ -235,8 +295,10 @@
                             }
                             
                             // Condition 3 for disabling Join button
-                            if ( !$indv_reserved && !$group_reserved) {
+                            if ( !$indv_reserved && !$group_reserved ||  $user_has_reservation_so_cant_join) {
+                
                                 echo "<button href='reserve_join.php?building=$building&floor=$floor&class_no=$class_no&date=$date&hour=$hours[$i]' class='button' disabled onclick='Join($hours[$i])'>Join</button>";
+                                
                             } else {
                                 echo "<a href='reserve_join.php?building=$building&floor=$floor&class_no=$class_no&date=$date&hour=$hours[$i]' class='button' onclick='Join($hours[$i])'>Join</a>";
                             }
