@@ -1,8 +1,4 @@
 <?php
-  if(!isset($_SESSION)) 
-  { 
-      session_start(); 
-  } 
   include "config.php";
   include "header.php"  
   
@@ -11,6 +7,7 @@
 <form action="classSearch-query.php" method="post">
   <br>
   <div class="filter-container">
+
     <select name="building" class="study-room-selector">
       <option value="all">Building</option>
       <option value="CASE">CASE</option>
@@ -57,6 +54,12 @@
 
     <select name="has_window" class="study-room-selector">
       <option value="all">Window</option>
+      <option value=1>Yes</option>
+      <option value=0>No</option>
+    </select>
+
+    <select name="has_Cam" class="study-room-selector">
+      <option value="all">Camera</option>
       <option value=1>Yes</option>
       <option value=0>No</option>
     </select>
