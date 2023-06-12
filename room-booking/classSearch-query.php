@@ -27,9 +27,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
     
     // Build the SQL query
     $sql = "SELECT DISTINCT classes.building, classes.floor, classes.class_no, classes.image_url
-            FROM classes LEFT JOIN connections ON classes.building = connections.building AND classes.floor = connections.floor AND classes.class_no = connections.class_no
-            WHERE 1=1";
-
+    FROM classes LEFT JOIN connections ON classes.building = connections.building AND classes.floor = connections.floor AND classes.class_no = connections.class_no
+    WHERE 1=1";
     // Add WHERE conditions only if the user specified them
     if ($selectedBuilding !== "all") {
         $sql .= " AND classes.building = '$selectedBuilding'";
@@ -66,27 +65,20 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($selectedDocCam !== "all") {
         $sql .= " AND has_DocCam = '$selectedDocCam'";
     }
-
     if ($selectedOutlets !== "all") {
         $sql .= " AND has_outlets = '$selectedOutlets'";
     }
-
     if ($selectedLecCap !== "all") {
         $sql .= " AND has_lectureCap = '$selectedLecCap'";
     }
-
     if ($selectedTouchScreen !== "all") {
         $sql .= " AND has_touchScreen = '$selectedTouchScreen'";
     }
-    
     if ($selectedConnectionType !== "all") {
         $sql .= " AND connection_type = '$selectedConnectionType'";
     }
     
     $result = mysqli_query($db, $sql);
-
-    # print number of rows returned
-    echo '<h2 class="text-primary">Number of classes found: ' . mysqli_num_rows($result) . '</h2>';
 
 
 
@@ -115,9 +107,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
                         <p>Class No: ' . $classNo . '</p>
                         <p>Capacity: ' . $classInfo['capacity'] . '</p>
                       
-                       
-
-                        <!-- Add more information here -->
                     </div>
                 </div>';
         }
