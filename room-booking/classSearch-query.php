@@ -1,8 +1,4 @@
 <?php
-  if(!isset($_SESSION)) 
-  { 
-      session_start(); 
-  } 
 include "config.php";
 include "classSearch.php";
 
@@ -90,15 +86,19 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($selectedDocCam !== "all") {
         $sql .= " AND has_DocCam = '$selectedDocCam'";
     }
+
     if ($selectedOutlets !== "all") {
         $sql .= " AND has_outlets = '$selectedOutlets'";
     }
+
     if ($selectedLecCap !== "all") {
         $sql .= " AND has_lectureCap = '$selectedLecCap'";
     }
+
     if ($selectedTouchScreen !== "all") {
         $sql .= " AND has_touchScreen = '$selectedTouchScreen'";
     }
+    
     if ($selectedConnectionType !== "all") {
         $sql .= " AND connection_type = '$selectedConnectionType'";
     }
@@ -156,7 +156,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
                             <p>Availability: ' . $availability . '</p>
                         </div>
 
-                        <!-- Add more information here -->
                     </div>
                 </div>';
         }
