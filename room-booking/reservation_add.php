@@ -65,7 +65,7 @@
             $allow_individual = true;
         }
 
-        //retrieves dates of individual reserved selected class
+        //retrieves dates of individual reserves and joins of a selected class
         $check_indv_reserved_query = "SELECT DATE_FORMAT(res_time, '%Y-%m-%d-%H') AS date
                                         FROM classes INNER JOIN reservations 
                                         WHERE YEAR(res_time) = '$year' AND MONTH(res_time) = '$month' AND DAY(res_time) = '$day' AND res_status = 'RESERVED'
@@ -229,8 +229,7 @@
 
 
                             
-                            echo $current_time;
-                            echo $date;
+                            
                             
 
                             $check_if_user_has_reservation_query =      "SELECT CONVERT(res_time,CHAR) as res_time
@@ -273,12 +272,23 @@
 
                             if (in_array($current_time,$users_reserved_times))
                             {
-                            echo "Match exists!";
+                            
                             $user_has_reservation_so_cant_join = true;
                             }
                             
-                            
+                            $is_there_reservation_query = "SELECT *
+                                                            FROM reservations
+                                                            WHERE YEAR(res_time) = '$year' AND MONTH(res_time) = '$month' AND DAY(res_time) = '$day' AND HOUR(res_time)='$hours[$i]'
+                                                            AND res_status = 'RESERVED' AND classes.building = '$building' AND classes.floor = '$floor'
+                                                            AND classes.class_no = '$class_no'
+                                                ";
+                             $is_there_reservation_result = $db->query($is_there_reservation_query); 
 
+                             $is_there_reservation = false;
+
+                            if($is_there_reservation_result != NULL){
+                                $is_there_reservation = true;
+                            }
                             
                             // Condition 1 for disabling Reserve (Individual) button
                             if (! ($allow_individual && !$indv_reserved && !$group_reserved)) {
@@ -295,7 +305,7 @@
                             }
                             
                             // Condition 3 for disabling Join button
-                            if ( !$indv_reserved || ($group_reserved && !$user_has_reservation_so_cant_join)) {
+                            if ( $is_there_reservation && !$indv_reserved || ($group_reserved && !$user_has_reservation_so_cant_join)) {
                                 echo "<a href='reserve_join.php?building=$building&floor=$floor&class_no=$class_no&date=$date&hour=$hours[$i]' class='button' onclick='Join($hours[$i])'>Join</a>";
                 
                                 
