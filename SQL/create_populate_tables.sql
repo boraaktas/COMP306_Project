@@ -733,7 +733,6 @@ CREATE TABLE JOINS
 
 INSERT INTO `JOINS` (`ku_id`, `building`, `floor`, `class_no`, `join_time`, `join_status`) VALUES
 ('71461', 'SOS', '1', '44', '2023-05-29 04:00:00', 'FINISHED'),
-('71461', 'SOS', '1', '44', '2023-05-29 07:00:00', 'FINISHED'),
 ('71812', 'SCI', '1', '29', '2023-05-31 00:00:00', 'FINISHED'),
 ('71812', 'SOS', '1', '44', '2023-05-29 03:00:00', 'FINISHED'),
 ('99013', 'SOS', '1', '44', '2023-05-29 03:00:00', 'FINISHED'),
@@ -757,5 +756,16 @@ CREATE TRIGGER join_status_update
                                 SET join_status = 'FINISHED'
                                 WHERE building = NEW.building AND floor = NEW.floor AND class_no = NEW.class_no AND join_time = NEW.res_time AND join_status = 'JOINED';
                             END IF;
+                END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE TRIGGER join_status_delete
+        AFTER DELETE ON RESERVATIONS
+        FOR EACH ROW
+                BEGIN
+                        DELETE FROM JOINS
+                        WHERE building = OLD.building AND floor = OLD.floor AND class_no = OLD.class_no AND join_time = OLD.res_time;
                 END //
 DELIMITER ;
