@@ -114,7 +114,7 @@ include "config.php"
 </form>  
     <style>
         body {
-            background-color: #f2f2f2;
+            background-color: #800000;
             font-family: Arial, sans-serif;
         }
 
@@ -142,12 +142,28 @@ include "config.php"
         }
 
         .form-group input {
-            width: 100%;
-            padding: 8px;
-            font-size: 16px;
+            display: block;
+            width: 93%;
+            padding: 10px;
+            border: none;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 15px;
             border: 1px solid #ccc;
-            border-radius: 3px;
+            border-radius: 5px;
         }
+        .form-group select {
+            display: block;
+            width: 93%;
+            padding: 10px;
+            border: none;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
 
         .form-group button {
             display: block;
@@ -160,5 +176,7 @@ include "config.php"
             border-radius: 3px;
             cursor: pointer;
         }
+      
+
     </style>
 

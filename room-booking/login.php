@@ -68,7 +68,7 @@ if(!isset($_SESSION))
 <style>
 
     body {
-        background: #77abdd;
+        background: #800000;
         display:flex;
         font-family: sans-serif;
         justify-content: center;
