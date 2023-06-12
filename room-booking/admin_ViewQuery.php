@@ -25,9 +25,14 @@
     }
 
 
+    if ($selectedType === "all" && $selectedStudyType === "Individual") {
+        $selectedType = "reservation";
+    }
+
+
     $sql = "";
 
-    if ($selectedType == "all") {
+    if ($selectedType === "all") {
         $sql .= "SELECT r.ku_id, 'Reservation' AS type, r.building, r.floor, r.class_no,
                         r.study_type as study_type, r.res_status as status, r.res_time AS date_time
                     FROM reservations as r
@@ -42,7 +47,7 @@
             if ($selectedStatus == "Ongoing") {
                 $sql .= " AND r.res_status = 'RESERVED'"; 
             } else {
-                    $sql .= " AND r.res_status = 'FINISHED'"; 
+                $sql .= " AND r.res_status = 'FINISHED'"; 
             } 
         }
         if ($selectedStartDate != "") { $sql .= " AND r.res_time >= '$selectedStartDate'"; }
@@ -63,34 +68,35 @@
             if ($selectedStatus == "Ongoing") {
                 $sql .= " AND j.join_status = 'JOINED'";
             } else {
-                    $sql .= " AND j.join_status = 'FINISHED'";
+                $sql .= " AND j.join_status = 'FINISHED'";
             } 
         }
         if ($selectedStartDate != "") { $sql .= " AND j.join_time >= '$selectedStartDate'"; }
         if ($selectedEndDate != "") { $sql .= " AND j.join_time <= '$selectedEndDate'"; }
     
-    } else if ($selectedType == "reservations") {
+    } else if ($selectedType === "reservation") {
 
         $sql .= "SELECT r.ku_id, 'Reservation' AS type, r.building, r.floor, r.class_no,
                         r.study_type as study_type, r.res_status as status, r.res_time AS date_time
-                    FROM reservation as r
+                    FROM reservations as r
                     WHERE 1=1";
         
         if ($selectedBuilding != "all") { $sql .= " AND r.building = '$selectedBuilding'"; }
         if ($selectedFloor != "all") { $sql .= " AND r.floor = '$selectedFloor'"; }
         if ($selectedClassNo != "") { $sql .= " AND r.class_no = '$selectedClassNo'"; }
         if ($selectedKUID != "") { $sql .= " AND r.ku_id = '$selectedKUID'"; }
+        if ($selectedStudyType != "all") { $sql .= " AND r.study_type = '$selectedStudyType'"; }
         if ($selectedStatus != "all") { 
             if ($selectedStatus == "Ongoing") {
                 $sql .= " AND r.res_status = 'RESERVED'"; 
             } else {
-                    $sql .= " AND r.res_status = 'FINISHED'"; 
+                $sql .= " AND r.res_status = 'FINISHED'"; 
             } 
         }
         if ($selectedStartDate != "") { $sql .= " AND r.res_time >= '$selectedStartDate'"; }
         if ($selectedEndDate != "") { $sql .= " AND r.res_time <= '$selectedEndDate'"; }
 
-    } else if ($selectedType == "join") {
+    } else if ($selectedType === "join") {
 
         $sql .= "SELECT j.ku_id, 'Join' AS type, j.building, j.floor, j.class_no,
                         'Group' as study_type, j.join_status as status, j.join_time AS date_time
@@ -105,7 +111,7 @@
             if ($selectedStatus == "Ongoing") {
                 $sql .= " AND j.join_status = 'JOINED'";
             } else {
-                    $sql .= " AND j.join_status = 'FINISHED'";
+                $sql .= " AND j.join_status = 'FINISHED'";
             } 
         }
         if ($selectedStartDate != "") { $sql .= " AND j.join_time >= '$selectedStartDate'"; }
@@ -138,6 +144,11 @@
         array_push($study_types, $row['study_type']);
         array_push($statuses, $row['status']);
         array_push($date_times, $row['date_time']);
+    }
+
+    if ($selectedType === "join" && $selectedStudyType === "Individual") {
+        echo "<script>alert('Individual study cannot be joined.');</script>";
+        echo "<script>window.location.href = 'admin_ViewFilter.php';</script>";
     }
 
 ?>

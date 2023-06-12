@@ -1,146 +1,178 @@
 <?php
-include "header.php";
-include "config.php"
+
+    if(!isset($_SESSION))  { 
+        session_start(); 
+    } 
+
+    include "header.php";
+    include "config.php"
 ?>
 
 
-<form action="edit.php" method="POST">
-    <?php
-        $current_id = $_SESSION['ku_id'];
-        $sql = "SELECT * FROM users WHERE ku_id = '$current_id'";
-        $gotResuslts = mysqli_query($db,$sql);
-        
+<?php
+    $current_id = $_SESSION['ku_id'];
+    $sql = "SELECT u.*, r.academic_level, r.faculty
+            FROM users u
+            JOIN regular_users r ON u.ku_id = r.ku_id
+            WHERE u.ku_id = '$current_id'";
 
-        if($gotResuslts ){
-            if(mysqli_num_rows($gotResuslts)>0 ){
-                while($row = mysqli_fetch_array($gotResuslts)){
-                
-    ?>
-    <div class="container">
-        <h2>Edit Profile</h2>
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" name="UpdateUserName" class="form-control" value = "<?php echo $row['firstname']; ?>">
-            </div>
-            <div class="form-group">
-                <label for="name">Surname:</label>
-                <input type="text" surname="UpdateSurname" class="form-control" value = "<?php echo $row['lastname']; ?>">
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="text" name="UpdateEmail" class="form-control" value = "<?php echo $row['mail']; ?>">
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="text" name="UpdatePassword" class="form-control" value ="<?php echo $row['password']; ?>">
-            </div>
-             </div>
-    <?php
+    $result = mysqli_query($db, $sql);
+
+    if ($result) {
+        if (mysqli_num_rows($result) > 0) {
+
+            $row = mysqli_fetch_assoc($result);
+
+            if(isset($_POST['update_user'])){
+                $firstname = $_POST['name'];
+                $lastname = $_POST['lastname'];
+                $password = $_POST['password'];
+                $academic_level = $_POST['academic_level'];
+                $faculty = $_POST['faculty'];
+
+                $sql2 = "UPDATE users SET firstname = '$firstname', lastname = '$lastname', password = '$password' WHERE ku_id = '$current_id'";
+                $result2 = mysqli_query($db, $sql2);
+
+                $sql3 = "UPDATE regular_users SET academic_level = '$academic_level', faculty = '$faculty' WHERE ku_id = '$current_id'";
+                $result3 = mysqli_query($db, $sql3);
+
+                if($result2 || $result3){
+                    echo "<script>alert('Profile updated successfully!')</script>";
+                    echo "<script>window.open('edit.php','_self')</script>";
+                } else{
+                    echo "<script>alert('Profile update failed!')</script>";
+                    echo "<script>window.open('edit.php','_self')</script>";
                 }
-            }
-        }
-    
-             
-        $sql = "SELECT * FROM regular_users WHERE ku_id = '$current_id'";
-        $gotResuslts = mysqli_query($db,$sql);
+                       
+            }   
         
+?>
 
-        if($gotResuslts){
-            if(mysqli_num_rows($gotResuslts)>0 ){
-                while($row = mysqli_fetch_array($gotResuslts)){
-                    echo $row['ku_id'];
-                
-    ?>
+
+<form action="edit.php" method="post">
+            <div class="container">
+                <h2>Edit Profile</h2>
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" name="name" class="form-control"
+                           value="<?php echo $row['firstname']; ?>">
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Surname:</label>
+                    <input type="text" name="lastname" class="form-control"
+                           value="<?php echo $row['lastname']; ?>">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="text" name="email" class="form-control"
+                           value="<?php echo $row['mail']; ?>" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="text" name="password" class="form-control"
+                           value="<?php echo $row['password']; ?>">
+                </div>
+                <div class="form-group">
+                    <label for="ku_id">KU ID:</label>   
+                    <input type = "text" name="ku_id" class="form-control"
+                           value="<?php echo $row['ku_id']; ?>" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="academic_level">Academic Level:</label>
+                    <select name="academic_level" class="form-control">
+                        <option value="" disabled selected>Select your academic level</option>
+                        <option value="Freshman" <?php echo ($row['academic_level'] == 'Freshman') ? 'selected' : ''; ?>>
+                            Freshman
+                        </option>
+                        <option value="Sophomore" <?php echo ($row['academic_level'] == 'Sophomore') ? 'selected' : ''; ?>>
+                            Sophomore
+                        </option>
+                        <option value="Junior" <?php echo ($row['academic_level'] == 'Junior') ? 'selected' : ''; ?>>
+                            Junior
+                        </option>
+                        <option value="Senior" <?php echo ($row['academic_level'] == 'Senior') ? 'selected' : ''; ?>>
+                            Senior
+                        </option>
+                        <option value="Masters" <?php echo ($row['academic_level'] == 'Masters') ? 'selected' : ''; ?>>
+                            Masters
+                        </option>
+                        <option value="PhD" <?php echo ($row['academic_level'] == 'PhD') ? 'selected' : ''; ?>>
+                            PhD
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="faculty">Faculty:</label>
+                    <select name="faculty" class="form-control">
+                        <option value="" disabled selected>Select your faculty</option>
+                        <option value="CASE" <?php echo ($row['faculty'] == 'CASE') ? 'selected' : ''; ?>>CASE</option>
+                        <option value="CS" <?php echo ($row['faculty'] == 'CS') ? 'selected' : ''; ?>>CS</option>
+                        <option value="CSSH" <?php echo ($row['faculty'] == 'CSSH') ? 'selected' : ''; ?>>CSSH</option>
+                        <option value="CE" <?php echo ($row['faculty'] == 'CE') ? 'selected' : ''; ?>>CE</option>
+                        <option value="SOM" <?php echo ($row['faculty'] == 'SOM') ? 'selected' : ''; ?>>SOM</option>
+                        <option value="SON" <?php echo ($row['faculty'] == 'SON') ? 'selected' : ''; ?>>SON</option>
+                        <option value="LAW" <?php echo ($row['faculty'] == 'LAW') ? 'selected' : ''; ?>>LAW</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit" name="update_user">Update </button>
+            <?php  
+              
+        }
+    }
+            ?>
+
+
+</form>  
    
-</form>
-    
-    <form action="edit.php" method="POST">
-            <div class="form-group">
-                <label for = "academic_level">Academic Level:</label>
-                <select name="academic_level" class="form-control" value ="<?php echo $row2['academic_level']; ?>" >
-                    <option value="" disabled selected>Select your academic level</option>
-                    <option value="Freshman">Freshman</option>
-                    <option value="Sophomore">Sophomore</option>
-                    <option value="Junior">Junior</option>
-                    <option value="Senior">Senior</option>
-                    <option value="Masters">Masters</option>
-                    <option value="PhD">PhD</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for = "faculty">Faculty:</label>
-                <select name="faculty" class="form-control" value = "<?php echo $row2['faculty']; ?>" >
-                    <option value="" disabled selected>Select your faculty</option>
-                    <option value="CASE">CASE</option>
-                    <option value="CS">CS</option>
-                    <option value="CSSH">CSSH</option>
-                    <option value="CE">CE</option>
-                    <option value="SOM">SOM</option>
-                    <option value="SON">SON</option>
-                    <option value="LAW">LAW</option>
-                </select>
-            </div>
+<style>
 
-           
-            <div class="form-group">
-                <button type="submit">Update</button>
-            </div>
+    body {
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+    }
 
-    </div>
-    <?php
-                }
-            }
-        }
+    .container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-    ?>
-</form>
-    <style>
-        body {
-            background-color: #f2f2f2;
-            font-family: Arial, sans-serif;
-        }
+    .container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
 
-        .container {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    .form-group {
+        margin-bottom: 20px;
+    }
 
-        .container h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+    .form-group input {
+        width: 100%;
+        padding: 8px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
+    .form-group button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #45a049;
+        color: #fff;
+        font-size: 16px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
 
-        .form-group input {
-            width: 100%;
-            padding: 8px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-
-        .form-group button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #45a049;
-            color: #fff;
-            font-size: 16px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-    </style>
-
+</style>
