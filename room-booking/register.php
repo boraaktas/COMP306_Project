@@ -1,9 +1,14 @@
 <?php 
 
-    session_start();
+    if(!isset($_SESSION))  { 
+        session_start(); 
+    } 
+
     include('config.php'); 
     
     $registerFailed = false;
+    $mailCheckFailed = false;
+    $bdFailed = false;
 
     if(isset($_POST['ku_id'], $_POST['firstname'], $_POST['lastname'], $_POST['mail'], $_POST['password'])) {
 
@@ -19,10 +24,25 @@
         $gender = $_POST['gender'];
 
         $userCheck = $db->query("select * from users where ku_id='$ku_id'");
+        $mailCheck = $db->query("select * from users where mail='$mail'");
 
         if($userCheck->num_rows > 0) {
             $registerFailed = true;
         } 
+
+
+        if($mailCheck->num_rows > 0 ) {
+            $mailCheckFailed = true;
+        }
+
+        //check birthdate is not from the future
+  
+        $today = date("Y-m-d");
+        if($birthdate > $today) {
+            $bdFailed = true;
+        }
+
+
         else {
             $query = $db->query("insert into users (ku_id, firstname, lastname, mail, password) values ('$ku_id', '$firstname', '$lastname', '$mail', '$password')");
             
@@ -50,6 +70,14 @@
             <?php 
                 if($registerFailed == true) {
                     echo '<div class="error">This KU Email already taken!</div>';
+                }
+
+                if($mailCheckFailed == true) {
+                    echo '<div class="error">This Email already taken!</div>';
+                }
+               
+                if($bdFailed == true) {
+                    echo '<div class="error">Birthdate cannot be from the future!</div>';  
                 }
 
                 if(isset($_GET['success'])) {
@@ -127,10 +155,21 @@
         font-family: Arial, sans-serif;
     }
 
-    form input, form select {
+    form input{
+        display: block;
+        width: 93%;
+        padding: 10px;
+        border: none;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        font-size: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+     form select {
         display: block;
         width: 100%;
-        padding: 15px;
+        padding: 10px;
         border: none;
         margin-bottom: 10px;
         border-radius: 5px;
@@ -139,16 +178,6 @@
         border-radius: 5px;
     }
 
-    form button {
-        border: 1px solid #3498db;
-        background: inherit; 
-        color: #ffffff; 
-        padding: 10px 20px;
-        font-size: 20px;
-        font-family: 'Poppins', sans-serif;
-        cursor: pointer;
-        margin: 10px;
-    }
 
     h1 {
         font-size: 16px;
