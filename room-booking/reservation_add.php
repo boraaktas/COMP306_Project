@@ -229,8 +229,7 @@
 
 
                             
-                            echo $current_time;
-                            echo $date;
+                            
                             
 
                             $check_if_user_has_reservation_query =      "SELECT CONVERT(res_time,CHAR) as res_time
@@ -273,7 +272,7 @@
 
                             if (in_array($current_time,$users_reserved_times))
                             {
-                            echo "Match exists!";
+                            
                             $user_has_reservation_so_cant_join = true;
                             }
                             
