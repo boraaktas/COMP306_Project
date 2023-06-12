@@ -295,12 +295,13 @@
                             }
                             
                             // Condition 3 for disabling Join button
-                            if ( !$indv_reserved && !$group_reserved ||  $user_has_reservation_so_cant_join) {
+                            if ( !$indv_reserved || ($group_reserved && !$user_has_reservation_so_cant_join)) {
+                                echo "<a href='reserve_join.php?building=$building&floor=$floor&class_no=$class_no&date=$date&hour=$hours[$i]' class='button' onclick='Join($hours[$i])'>Join</a>";
                 
-                                echo "<button href='reserve_join.php?building=$building&floor=$floor&class_no=$class_no&date=$date&hour=$hours[$i]' class='button' disabled onclick='Join($hours[$i])'>Join</button>";
+                                
                                 
                             } else {
-                                echo "<a href='reserve_join.php?building=$building&floor=$floor&class_no=$class_no&date=$date&hour=$hours[$i]' class='button' onclick='Join($hours[$i])'>Join</a>";
+                                echo "<button href='reserve_join.php?building=$building&floor=$floor&class_no=$class_no&date=$date&hour=$hours[$i]' class='button' disabled onclick='Join($hours[$i])'>Join</button>";
                             }
                             
                             echo "</td>";
