@@ -1,8 +1,5 @@
 <?php
-  if(!isset($_SESSION)) 
-  { 
-      session_start(); 
-  } 
+
     include "config.php";
     include 'reservation.php';
 
@@ -24,35 +21,23 @@
         $ku_id = $_SESSION['ku_id'];
         $studyType = 'Group';
         $res_time = $date ." ". $formattedHour;
-
+        echo $res_time;
         
         // Build the SQL query
         $sql = "INSERT INTO reservations (ku_id, building, floor, class_no, res_time, res_status, study_type)  values ('$ku_id', '$building' , '$floor' , '$class_no', '$res_time', 'RESERVED', '$studyType')";
 
-
+        echo $sql;
         $result = mysqli_query($db, $sql);
-
+        
         if ($result) {
-            echo "<h2>Group Reservation Successful</h2>";
-            echo "<table border='1' style='border-collapse: collapse;'>
-            <tr>
-                <th style='background-color: #009c05; color: white;'>Building</th>
-                <th style='background-color: #009c05; color: white;'>Floor</th>
-                <th style='background-color: #009c05; color: white;'>Class No</th>
-                <th style='background-color: #009c05; color: white;'>Reservation Time</th>
-            </tr>";
-            echo "<tr>";
-            echo "<td style='background-color: #d9d9d9;'>" . $building . "</td>";
-            echo "<td style='background-color: #d9d9d9;'>" . $floor . "</td>";
-            echo "<td style='background-color: #d9d9d9;'>" . $class_no . "</td>";
-            echo "<td style='background-color: #d9d9d9;'>" . $res_time . "</td>";
-            echo "</tr>";
-            echo "</table>";
-            echo "<br>";
-        } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($db);
-        } 
-    
+            echo "reservation added";
+        }
+        
+        
+
+        
+
+
     }
 
 ?>

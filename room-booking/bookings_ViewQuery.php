@@ -9,7 +9,7 @@
 
     $ku_id = $_SESSION['ku_id'];
 
-    $sql = "SELECT r.ku_id, 'Reservation' AS type, r.building, r.floor, r.class_no,
+    $sql .= "SELECT r.ku_id, 'Reservation' AS type, r.building, r.floor, r.class_no,
                     r.study_type as study_type, r.res_status as status, r.res_time AS date_time
                 FROM reservations as r
                 WHERE r.ku_id = '$ku_id'

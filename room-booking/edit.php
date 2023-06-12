@@ -1,45 +1,54 @@
 <?php
-  if(!isset($_SESSION)) 
-  { 
-      session_start(); 
-  } 
-include "header.php";
-include "config.php"
+
+    if(!isset($_SESSION))  { 
+        session_start(); 
+    } 
+
+    include "header.php";
+    include "config.php"
 ?>
 
-    <?php
+
+<?php
     $current_id = $_SESSION['ku_id'];
     $sql = "SELECT u.*, r.academic_level, r.faculty
             FROM users u
             JOIN regular_users r ON u.ku_id = r.ku_id
             WHERE u.ku_id = '$current_id'";
+
     $result = mysqli_query($db, $sql);
 
     if ($result) {
         if (mysqli_num_rows($result) > 0) {
+
             $row = mysqli_fetch_assoc($result);
+
             if(isset($_POST['update_user'])){
                 $firstname = $_POST['name'];
                 $lastname = $_POST['lastname'];
                 $password = $_POST['password'];
                 $academic_level = $_POST['academic_level'];
                 $faculty = $_POST['faculty'];
+
                 $sql2 = "UPDATE users SET firstname = '$firstname', lastname = '$lastname', password = '$password' WHERE ku_id = '$current_id'";
                 $result2 = mysqli_query($db, $sql2);
+
                 $sql3 = "UPDATE regular_users SET academic_level = '$academic_level', faculty = '$faculty' WHERE ku_id = '$current_id'";
                 $result3 = mysqli_query($db, $sql3);
+
                 if($result2 || $result3){
                     echo "<script>alert('Profile updated successfully!')</script>";
                     echo "<script>window.open('edit.php','_self')</script>";
-                }
-                else{
+                } else{
                     echo "<script>alert('Profile update failed!')</script>";
                     echo "<script>window.open('edit.php','_self')</script>";
                 }
-                
-                
-            }       
-            ?>
+                       
+            }   
+        
+?>
+
+
 <form action="edit.php" method="post">
             <div class="container">
                 <h2>Edit Profile</h2>
@@ -107,76 +116,63 @@ include "config.php"
                 </div>
                 <div class="form-group">
                     <button type="submit" name="update_user">Update </button>
-            <?php   
+            <?php  
+              
         }
     }
             ?>
+
+
 </form>  
-    <style>
-        body {
-            background-color: #800000;
-            font-family: Arial, sans-serif;
-        }
+   
+<style>
 
-        .container {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    body {
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+    }
 
-        .container h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+    .container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+    .container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
+    .form-group {
+        margin-bottom: 20px;
+    }
 
-        .form-group input {
-            display: block;
-            width: 93%;
-            padding: 10px;
-            border: none;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            font-size: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .form-group select {
-            display: block;
-            width: 93%;
-            padding: 10px;
-            border: none;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            font-size: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
 
+    .form-group input {
+        width: 100%;
+        padding: 8px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
 
-        .form-group button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #45a049;
-            color: #fff;
-            font-size: 16px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-      
+    .form-group button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #45a049;
+        color: #fff;
+        font-size: 16px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
 
-    </style>
-
+</style>

@@ -1,8 +1,5 @@
 <?php
-  if(!isset($_SESSION)) 
-  { 
-      session_start(); 
-  } 
+
     mysqli_report(MYSQLI_REPORT_OFF);
     $db = mysqli_connect('localhost','root','','class_booking', '3302');
 

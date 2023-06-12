@@ -156,6 +156,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
                             <p>Availability: ' . $availability . '</p>
                         </div>
 
+                        <!-- Add more information here -->
                     </div>
                 </div>';
         }

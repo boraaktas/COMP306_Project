@@ -1,9 +1,6 @@
 <?php 
 
-if(!isset($_SESSION)) 
-{ 
-    session_start(); 
-} 
+    session_start();
     include('config.php'); 
 
 
@@ -68,7 +65,7 @@ if(!isset($_SESSION))
 <style>
 
     body {
-        background: #800000;
+        background: #77abdd;
         display:flex;
         font-family: sans-serif;
         justify-content: center;

@@ -1,8 +1,5 @@
 <?php
-      if(!isset($_SESSION)) 
-      { 
-          session_start(); 
-      } 
+    session_start();
     include "config.php";
 
     if (!isset($_SESSION['ku_id'])) {
@@ -34,7 +31,7 @@
             
                 <form id ="form" method="POST" >
                     <button class="button" onclick="redirectToPage('homepage')"> Home </button>
-                    <button class="button" onclick="redirectToPage('classSearch')">Class Search </button>
+                    <button class="button" onclick="redirectToPage('classSearch-query')">Class Search </button>
                     <button class="button" onclick="redirectToPage('reservation')">Reserve Class </button>
 
                     <select class="nav_select" name="Edit" onchange="redirectToPage(this.value)">    
