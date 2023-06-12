@@ -28,8 +28,12 @@
             alert("Please choose a reasonable date range.");
             return false;
         }
+        
+        // go to admin_firstChart.php with the date range
+        window.location.href = "admin_firstChart.php?start_date=" + start_date + "&end_date=" + end_date;
 
         return true;
+
     }
 
 </script>
@@ -40,7 +44,7 @@
     <body>
         <section class="date_range">
             <h1>Choose Date Range</h1>
-            <form action="admin_showAnalysis.php" method="POST">
+            <form action="admin_firstChart.php" method="get">
                 <div class=date>
                     <div class=start_date>
                         <label for="start">Start date:</label>
