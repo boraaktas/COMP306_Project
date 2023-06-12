@@ -7,7 +7,6 @@ include "header.php";
 include "config.php"
 ?>
 
-
     <?php
     $current_id = $_SESSION['ku_id'];
     $sql = "SELECT u.*, r.academic_level, r.faculty
@@ -19,8 +18,29 @@ include "config.php"
     if ($result) {
         if (mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_assoc($result);
+            if(isset($_POST['update_user'])){
+                $firstname = $_POST['name'];
+                $lastname = $_POST['lastname'];
+                $password = $_POST['password'];
+                $academic_level = $_POST['academic_level'];
+                $faculty = $_POST['faculty'];
+                $sql2 = "UPDATE users SET firstname = '$firstname', lastname = '$lastname', password = '$password' WHERE ku_id = '$current_id'";
+                $result2 = mysqli_query($db, $sql2);
+                $sql3 = "UPDATE regular_users SET academic_level = '$academic_level', faculty = '$faculty' WHERE ku_id = '$current_id'";
+                $result3 = mysqli_query($db, $sql3);
+                if($result2 || $result3){
+                    echo "<script>alert('Profile updated successfully!')</script>";
+                    echo "<script>window.open('edit.php','_self')</script>";
+                }
+                else{
+                    echo "<script>alert('Profile update failed!')</script>";
+                    echo "<script>window.open('edit.php','_self')</script>";
+                }
+                
+                
+            }       
             ?>
-            <form action="update_user.php" method="POST">
+<form action="edit.php" method="post">
             <div class="container">
                 <h2>Edit Profile</h2>
                 <div class="form-group">
@@ -29,14 +49,14 @@ include "config.php"
                            value="<?php echo $row['firstname']; ?>">
                 </div>
                 <div class="form-group">
-                    <label for="name">Surname:</label>
-                    <input type="text" surname="surname" class="form-control"
+                    <label for="lastname">Surname:</label>
+                    <input type="text" name="lastname" class="form-control"
                            value="<?php echo $row['lastname']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="email">Email:</label>
                     <input type="text" name="email" class="form-control"
-                           value="<?php echo $row['mail']; ?>">
+                           value="<?php echo $row['mail']; ?>" disabled>
                 </div>
                 <div class="form-group">
                     <label for="password">Password:</label>
@@ -44,12 +64,10 @@ include "config.php"
                            value="<?php echo $row['password']; ?>">
                 </div>
                 <div class="form-group">
-                    <label for="ku_id">KU ID:</label>
-                    <input type="text" name="ku_id" class="form-control"
-                           value="<?php echo $row['ku_id']; ?>">
+                    <label for="ku_id">KU ID:</label>   
+                    <input type = "text" name="ku_id" class="form-control"
+                           value="<?php echo $row['ku_id']; ?>" disabled>
                 </div>
-
-
                 <div class="form-group">
                     <label for="academic_level">Academic Level:</label>
                     <select name="academic_level" class="form-control">
@@ -89,23 +107,12 @@ include "config.php"
                 </div>
                 <div class="form-group">
                     <button type="submit" name="update_user">Update </button>
-                    
-
-                </div>
-            </div>
-            <?php             
-                    
+            <?php  
+              
         }
     }
-    ?>
-
-  
-</form>
-    
-
-
-           
-
+            ?>
+</form>  
     <style>
         body {
             background-color: #f2f2f2;
