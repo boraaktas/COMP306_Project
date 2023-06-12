@@ -10,7 +10,7 @@
 
     if (isset($_GET['start_date']) && isset($_GET['end_date'])) {
         $start_date = $_GET['start_date'];
-        $end_date = $_GET['end_date'];
+        $end_date = $_GET['end_date'] . ' 23:59:59';
     } else {
         header('Location: admin_range.php');
     }
