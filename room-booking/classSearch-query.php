@@ -39,13 +39,13 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
                          LEFT JOIN (
                                     SELECT building, floor, class_no, COUNT(*) AS total_reservations, study_type
                                     FROM reservations
-                                    WHERE res_time = '$currentdate_time' AND res_status = 'FINISHED'
+                                    WHERE res_time = '$currentdate_time' AND res_status = 'RESERVED'
                                     GROUP BY building, floor, class_no, study_type
                                 ) reserved ON classes.building = reserved.building AND classes.floor = reserved.floor AND classes.class_no = reserved.class_no
                          LEFT JOIN (
                                     SELECT building, floor, class_no, COUNT(*) AS total_joins
                                     FROM joins
-                                    WHERE join_time = '$currentdate_time' AND join_status = 'FINISHED'
+                                    WHERE join_time = '$currentdate_time' AND join_status = 'JOINED'
                                     GROUP BY building, floor, class_no
                                 ) joined ON classes.building = joined.building AND classes.floor = joined.floor AND classes.class_no = joined.class_no
             WHERE 1 = 1";
@@ -136,7 +136,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
             $totalOccupancy = $row['total_occupancy'];
             $reserved_study_type = $row['reserved_study_type'];
 
-            $availability = $remainingCapacity > 0 && ($reserved_study_type == 'Not Reserved' || $reserved_study_type == 'GROUP') ? 'Available' : 'Not Available';
+            $availability = $remainingCapacity > 0 && ($reserved_study_type == 'Not Reserved' || $reserved_study_type == 'Group') ? 'Available' : 'Not Available';
 
             echo '<div class="class-card">
                     <img src="' . $imageURL . '" alt="Class Photo">
