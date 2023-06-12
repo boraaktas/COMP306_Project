@@ -81,7 +81,7 @@
     </select>
 
     <select name="has_touchScreen" class="study-room-selector">
-      <option value="all">Camera</option>
+      <option value="all">Touch Screen</option>
       <option value=1>Yes</option>
       <option value=0>No</option>
     </select>
