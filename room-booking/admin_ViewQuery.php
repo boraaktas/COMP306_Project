@@ -188,7 +188,7 @@
                     } else if ($statuses[$i] == "JOINED") {
                         echo "<td><button class='button' onclick='cancelJoin(\"" . $ku_ids[$i] . "\", \"" . $buildings[$i] . "\", \"" . $floors[$i] . "\", \"" . $class_nos[$i] . "\", \"" . $study_types[$i] . "\", \"" . $date_times[$i] . "\")'>Cancel Join</button></td>";
                     } else {
-                        echo "<td><button class='button' onclick='cancelReservation(\"" . $ku_ids[$i] . "\", \"" . $buildings[$i] . "\", \"" . $floors[$i] . "\", \"" . $class_nos[$i] . "\", \"" . $study_types[$i] . "\", \"" . $date_times[$i] . "\")' >Cancel Reservation</button></td>";
+                        echo "<td><button class='button' disabled>Finished</button></td>";
                     }
                     echo "</tr>";
                 }
