@@ -213,6 +213,12 @@ INSERT INTO `REGULAR_USERS` (`ku_id`, `academic_level`, `faculty`, `gender`, `bi
 
 
 
+-- Adding Admins
+INSERT INTO `ADMINS` (`ku_id`) VALUES ('00000');
+
+
+
+
 -- Adding Classes
 INSERT INTO CLASSES VALUES ('SCI', 'Z', '42', 48, 0, 1, 0, 1, 1, 0, 0, 1, 0, 'https://vegfest.istanbul/wp-content/uploads/2022/09/ege-ugur-amasya.jpg');
 INSERT INTO CLASSES VALUES ('SNA', 'A', '43', 34, 0, 1, 0, 1, 1, 0, 1, 1, 1, 'https://vegfest.istanbul/wp-content/uploads/2022/09/ege-ugur-amasya.jpg');

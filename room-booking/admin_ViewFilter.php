@@ -68,8 +68,8 @@
 
     <select name="study_type" class="study-room-selector">
       <option value="all">Study Type</option>
-      <option value="individual">Individual</option>
-      <option value="group">Group</option>
+      <option value="Individual">Individual</option>
+      <option value="Group">Group</option>
     </select>
 
     <select name="booking_status" class="study-room-selector">
