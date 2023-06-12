@@ -65,7 +65,7 @@
             $allow_individual = true;
         }
 
-        //retrieves dates of individual reserved selected class
+        //retrieves dates of individual reserves and joins of a selected class
         $check_indv_reserved_query = "SELECT DATE_FORMAT(res_time, '%Y-%m-%d-%H') AS date
                                         FROM classes INNER JOIN reservations 
                                         WHERE YEAR(res_time) = '$year' AND MONTH(res_time) = '$month' AND DAY(res_time) = '$day' AND res_status = 'RESERVED'
