@@ -21,7 +21,7 @@
         $ku_id = $_SESSION['ku_id'];
         $studyType = 'Join';
         $res_time = $date ." ". $formattedHour;
-        echo $res_time;
+        
         
         // Build the SQL query
         $sql = "INSERT INTO joins (ku_id, building, floor, class_no, join_time, join_status)  values ('$ku_id', '$building' , '$floor' , '$class_no', '$res_time', 'JOINED')";
