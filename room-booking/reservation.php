@@ -1,5 +1,8 @@
 <?php
-    session_start();
+     if(!isset($_SESSION)) 
+     { 
+         session_start(); 
+     } 
     include "config.php";
     include "header.php";
 
@@ -72,12 +75,11 @@
         today = yyyy + '-' + mm + '-' + dd;
 
         // if the input date is before the current date, then show an alert and clear the input
-        /* bunu açmayı unutma ha !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
         if (date < today) {
             alert("Please enter a valid date");
             document.getElementById("date").value = "";
         }
-        */
+
     }
 
 </script>

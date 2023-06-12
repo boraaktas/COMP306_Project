@@ -1,6 +1,9 @@
 <?php 
 
-    session_start();
+if(!isset($_SESSION)) 
+{ 
+    session_start(); 
+} 
     include('config.php'); 
 
 
@@ -65,7 +68,7 @@
 <style>
 
     body {
-        background: #77abdd;
+        background: #800000;
         display:flex;
         font-family: sans-serif;
         justify-content: center;
