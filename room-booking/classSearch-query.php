@@ -4,6 +4,8 @@ include "classSearch.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    $currentdate_time = date("Y-m-d H:00:00", strtotime("+1 hour"));
+
     $selectedBuilding = $_POST["building"];
     $selectedFloor = $_POST["floor"];
     $selectedClassNo = $_POST["class_no"];
@@ -17,14 +19,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $selectedLecCap= $_POST["has_lectureCap"];
     $selectedTouchScreen= $_POST["has_touchScreen"];
     $selectedConnectionType = $_POST["connection_type"];
+    $selectedAvailability = $_POST["availability"];
 }
 
 if($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    // print availability 
+
+    //echo '<h2 class="text-primary">Current date and time: ' . $currentdate_time . '</h2>';
     
     // Build the SQL query
-    $sql = "SELECT DISTINCT classes.building, classes.floor, classes.class_no, classes.image_url
-            FROM classes LEFT JOIN connections ON classes.building = connections.building AND classes.floor = connections.floor AND classes.class_no = connections.class_no
-            WHERE 1=1";
+    $sql = "SELECT DISTINCT classes.building, classes.floor, classes.class_no, classes.image_url,
+                            (classes.capacity - IFNULL(reserved.total_reservations, 0) - IFNULL(joined.total_joins, 0)) AS remaining_capacity,
+                            IFNULL(reserved.total_reservations, 0) +  IFNULL(joined.total_joins, 0) AS total_occupancy,
+                            classes.capacity,
+                            IFNULL(reserved.study_type, 'Not Reserved') AS reserved_study_type
+            FROM classes LEFT JOIN connections
+                                    ON classes.building = connections.building AND classes.floor = connections.floor AND classes.class_no = connections.class_no
+                         LEFT JOIN (
+                                    SELECT building, floor, class_no, COUNT(*) AS total_reservations, study_type
+                                    FROM reservations
+                                    WHERE res_time = '$currentdate_time' AND res_status = 'RESERVED'
+                                    GROUP BY building, floor, class_no, study_type
+                                ) reserved ON classes.building = reserved.building AND classes.floor = reserved.floor AND classes.class_no = reserved.class_no
+                         LEFT JOIN (
+                                    SELECT building, floor, class_no, COUNT(*) AS total_joins
+                                    FROM joins
+                                    WHERE join_time = '$currentdate_time' AND join_status = 'JOINED'
+                                    GROUP BY building, floor, class_no
+                                ) joined ON classes.building = joined.building AND classes.floor = joined.floor AND classes.class_no = joined.class_no
+            WHERE 1 = 1";
 
     // Add WHERE conditions only if the user specified them
     if ($selectedBuilding !== "all") {
@@ -78,15 +102,24 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($selectedConnectionType !== "all") {
         $sql .= " AND connection_type = '$selectedConnectionType'";
     }
+
+    if ($selectedAvailability !== "all") {
+        if ($selectedAvailability == "available") {
+            $sql .= " AND ((classes.capacity - IFNULL(reserved.total_reservations, 0) - IFNULL(joined.total_joins, 0)) > 0
+                            AND (reserved.study_type is NULL OR reserved.study_type = 'GROUP'))";
+        } else if ($selectedAvailability == "non_available") {
+            $sql .= " AND ((classes.capacity - IFNULL(reserved.total_reservations, 0) - IFNULL(joined.total_joins, 0)) <= 0
+                            OR (reserved.study_type = 'INDIVIDUAL'))";
+        }
+    }
     
     $result = mysqli_query($db, $sql);
 
     # print number of rows returned
-    echo '<h2 class="text-primary">Number of classes found: ' . mysqli_num_rows($result) . '</h2>';
 
-
-
-   
+    echo '<div class="num_classes-container">
+                <h2 class="num_classes">Number of classes found: ' . mysqli_num_rows($result) . '</h2>
+            </div>';
 
     //visualization of the query results
     
@@ -97,28 +130,37 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
             $building = $row['building'];
             $floor = $row['floor'];
             $classNo = $row['class_no'];
+            $imageURL = $row['image_url'];
+            $capacity = $row['capacity'];
+            $remainingCapacity = $row['remaining_capacity'];
+            $totalOccupancy = $row['total_occupancy'];
+            $reserved_study_type = $row['reserved_study_type'];
 
-            // Retrieve additional information for each class
-            $classInfoQuery = "SELECT * FROM classes WHERE building = '$building' AND floor = '$floor' AND class_no = '$classNo'";
-            $classInfoResult = mysqli_query($db, $classInfoQuery);
-            $classInfo = mysqli_fetch_assoc($classInfoResult);
+            $availability = $remainingCapacity > 0 && ($reserved_study_type == 'Not Reserved' || $reserved_study_type == 'Group') ? 'Available' : 'Not Available';
 
             echo '<div class="class-card">
-                    <img src="' . $classInfo['image_url'] . '" alt="Class Photo">
+                    <img src="' . $imageURL . '" alt="Class Photo">
                     <div class="class-details">
-                        <h3>' . $building . '</h3>
-                        <p>Floor: ' . $floor . '</p>
-                        <p>Class No: ' . $classNo . '</p>
-                        <p>Capacity: ' . $classInfo['capacity'] . '</p>
-                      
-                       
+                        <div class="class_main_infos">
+                            <h3>' . $building . ' ' . $floor . '' . $classNo . '</h3>
+                        </div>
+
+                        <div class="class_capacity">
+                            <p>Max Capacity: ' . $capacity . '</p>
+                            <p>Remaining Capacity: ' . $remainingCapacity . '</p>
+                            <p>Total Occupancy: ' . $totalOccupancy . '</p>
+                            <p>Reservation Type: ' . $reserved_study_type . '</p>
+                        </div>
+
+                        <div class="class_availability">
+                            <p>Availability: ' . $availability . '</p>
+                        </div>
 
                         <!-- Add more information here -->
                     </div>
                 </div>';
         }
     }
-
         echo '</div>';
     } else {
         echo '<h2 class="text-danger">Class not found</h2>';
@@ -133,6 +175,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
         grid-template-columns: repeat(3, 1fr);
         grid-gap: 20px;
         margin-top: 20px;
+        margin-right: 20px;
+        margin-left: 20px;
     }
 
     .class-card {
@@ -181,4 +225,18 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
     .class-card .class-details a:hover {
         background-color: #ff5722;
     }
+
+    .num_classes {
+        margin-top: 20px;
+        margin: 0 auto;
+    }
+
+    .num_classes-container {
+        display: flex;
+        justify-content: center;
+        background-color: #fff;
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+
 </style>
