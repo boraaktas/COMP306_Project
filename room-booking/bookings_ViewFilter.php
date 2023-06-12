@@ -1,7 +1,7 @@
 <?php
     session_start();
     include "config.php";
-    include "admin_header.php";
+    include "header.php";
 
     if (!isset($_SESSION['ku_id'])) {
         header('Location: login.php');
@@ -31,51 +31,20 @@
 </script>
 
 
-<form action="admin_ViewQuery.php" method="post">
+<form action="bookings.php" method="post">
   <br>
   <div class="filter-container">
 
-    <select name="building" class="study-room-selector">
-      <option value="all">Building</option>
-      <option value="CASE">CASE</option>
-      <option value="SNA">SNA</option>
-      <option value="ENG">ENG</option>
-      <option value="SOS">SOS</option>
-      <option value="SCI">SCI</option>
-      <option value="ELC">ELC</option>
-    </select>
-
-    <select name="floor" class="study-room-selector">
-      <option value="all">Floor</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="A">A</option>
-      <option value="Z">Z</option>
-      <option value="B">B</option>
-      <option value="B1">B1</option>
-      <option value="B2">B2</option>
-    </select>
-    
-    <input type="text" id="class_no" name="class_no" placeholder="Class No" class="study-room-selector">
-
-    <input type="text" id="ku_id" name="ku_id" placeholder="KU ID" maxlength="7" class="study-room-selector">
-
-    <select name="booking_type" class="study-room-selector">
+  <select name="booking_type" class="study-room-selector">
       <option value="all">Type of Booking</option>
       <option value="join">Join</option>
       <option value="reservation">Reservation</option>
     </select>
 
-    <select name="study_type" class="study-room-selector">
-      <option value="all">Study Type</option>
-      <option value="Individual">Individual</option>
-      <option value="Group">Group</option>
-    </select>
-
-    <select name="booking_status" class="study-room-selector">
+  <select name="booking_status" class="study-room-selector">
       <option value="all">Status</option>
       <option value="Finished">Finished</option>
-      <option value="Ongoing">Ongoing</option>
+      <option value="Future">Future</option>
     </select>
 
     <div class="date-container">
@@ -191,4 +160,3 @@
   }
 
 </style>
-

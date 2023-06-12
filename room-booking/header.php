@@ -40,7 +40,7 @@
                     <select class="nav_select" name="Edit" onchange="redirectToPage(this.value)">    
                         <option value="" disabled selected>Profile</option>
                         <option value="Edit">Edit</option>
-                        <option value="Settings">Settings</option>
+                        <option value="Bookings">Bookings</option>
                         <option value="logout">Logout</option>
         
                     </select>
