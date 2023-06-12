@@ -112,3 +112,22 @@ WHERE (IFNULL(r.total_reservations, 0) + IFNULL(j.total_joins, 0)) > 0
 ORDER BY total_usages DESC
 LIMIT 10;
 
+
+
+-- in reservation_add.php
+-- retrieves dates of individual reserves and joins of a selected class
+SELECT DATE_FORMAT(res_time, '%Y-%m-%d-%H') AS date
+FROM classes INNER JOIN reservations 
+WHERE YEAR(res_time) = '$year' AND MONTH(res_time) = '$month' AND DAY(res_time) = '$day' AND res_status = 'RESERVED'
+        AND classes.building = '$building' AND classes.floor = '$floor' AND classes.class_no = '$class_no'
+        AND classes.building=reservations.building AND classes.floor=reservations.floor AND classes.class_no=reservations.class_no
+        AND study_type = 'Individual'
+OR res_time IN (
+                SELECT res_time
+                FROM RESERVATIONS
+                WHERE ku_id = '$ku_id'
+                UNION
+                SELECT join_time
+                FROM JOINS
+                WHERE ku_id = '$ku_id');
+
