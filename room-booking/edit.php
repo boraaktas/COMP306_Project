@@ -107,8 +107,7 @@ include "config.php"
                 </div>
                 <div class="form-group">
                     <button type="submit" name="update_user">Update </button>
-            <?php  
-              
+            <?php   
         }
     }
             ?>

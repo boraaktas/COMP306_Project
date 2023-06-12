@@ -1,7 +1,11 @@
 <?php
-    session_start();
     include "config.php";
     include "header.php";
+    if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    }
+
 
     if (!isset($_SESSION['ku_id'])) {
         header('Location: login.php');
