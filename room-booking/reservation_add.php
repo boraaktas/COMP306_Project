@@ -194,8 +194,8 @@
     <table>
         <div class="hours-header">
             <th>Time</th>
-            <th>Capacity</th>
-            <th>Study Type</th>
+            <!--<th>Capacity</th>
+            <th>Study Type</th>-->
             <th>Reserve</th>
         </div>
         <div class="hours-body">
@@ -205,8 +205,8 @@
                     for ($i = 0; $i < count($hours); $i++) {
                         echo "<tr>";
                             echo "<td>$hours[$i]:00 - $hours[$i]:59</td>";
-                            echo "<td>Cap array</td>";
-                            echo "<td>Allowed Ind Study array</td>";
+                            //echo "<td>Cap array</td>";
+                            //echo "<td>Allowed Ind Study array</td>";
                             echo "<td>";
 
                             if (in_array($hours[$i], $reserved_indv_hours)) {
@@ -338,7 +338,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 90%;
+        width: 70%;
         margin: 0 auto;
     }
 
